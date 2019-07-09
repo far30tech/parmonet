@@ -32,7 +32,6 @@
 @section('script')
 
     <script>
-
         var app = new Vue({
             el: '#area',
             data: {
@@ -64,8 +63,8 @@
                         .catch(function (error) {
                             this.allerros = error.response.data.errors;
                             this.x=String(this.allerros.name[0]);
-                            console.log(this.x);
-                            this.success = false;
+
+                            currentObj.output = this.allerros.name[0];
                         });
                     this.$Progress.finish();
                 }
@@ -75,5 +74,6 @@
             }
         })
     </script>
+    454545646456
 @endsection
 
