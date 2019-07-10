@@ -219,3 +219,7 @@ ul {
 .datepicker-plot-area {
     font-family: 'Vazir', sans-serif;
 }
+
+.main-header{z-index: unset}
+
+a:hover{cursor: pointer}

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class PermissionController extends AdminController
+class PermissionController extends Controller
 {
-
-    public function index(Request $request)
+    public function fetch()
     {
-        $permissions = Permission::search($request->all());
-        if (sizeof($permissions) == 0) $x = 0;
-        else $x = 1;
-        return view('admin.permission.index',compact('permissions','x'));
+        $permissions = Permission::orderBy('updated_at', 'desc')->paginate(7);
+
+        return response()->json($permissions);
+
     }
 
     public function create()
@@ -26,17 +26,35 @@ class PermissionController extends AdminController
     {
         $request->validate([
             'name' => 'required',
+            'title' => 'required',
         ]);
 
         permission::create([
             'name'=>$request['name'],
+            'title'=>$request['title'],
         ]);
         return response()->json(['key' => 'value'], 200);
     }
 
-    public function destroy(Permission $permission)
+    public function delete(Permission $id)
     {
-        $permission->delete();
-        return redirect(route('permission.index'));
+        $id->delete();
+        return response()->json(['key' => 'value'], 200);
+    }
+
+    public function search(Request $request)
+    {
+
+        if (isset($request->id)){
+            $data = Permission::where('id','like','%'.$request->id.'%')->paginate(7);
+        }
+        if (isset($request->name)){
+            $data = Permission::where('name','like','%'.$request->name.'%')->paginate(7);
+        }
+        if (isset($request->title)){
+            $data = Permission::where('title','like','%'.$request->title.'%')->paginate(7);
+        }
+
+        return response()->json($data);
     }
 }

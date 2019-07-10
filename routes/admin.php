@@ -15,6 +15,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/permission/create', 'Admin\PermissionController@create')->name('permission.create');
     Route::post('/permission/store', 'Admin\PermissionController@store')->name('permission.store');
+    Route::get('/permission/fetch', 'Admin\PermissionController@fetch')->name('permission.fetch');
+    Route::get('/permission/delete/{id}', 'Admin\PermissionController@delete')->name('permission.delete');
+    Route::get('/permission/search', 'Admin\PermissionController@search')->name('permission.search');
 
 });
 
