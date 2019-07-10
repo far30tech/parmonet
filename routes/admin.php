@@ -16,6 +16,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/permission/create', 'Admin\PermissionController@create')->name('permission.create');
     Route::post('/permission/store', 'Admin\PermissionController@store')->name('permission.store');
 
+    Route::get('/category', 'Admin\CategoryController@index')->name('category');
+    Route::get('/category/create', 'Admin\CategoryController@create')->name('category.create');
+    Route::post('/category/store', 'Admin\CategoryController@store')->name('category.store');
+
 });
 
 
