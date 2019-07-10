@@ -52,6 +52,30 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link ">
+                            <i class="nav-icon fa fa-dashboard"></i>
+                            <p>
+                                دسته بندی ها
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('category.create') }}" class="nav-link ">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>جدید</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('category') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>نمایش</p>
+                                </a>
+                            </li>
+                           
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="pages/widgets.html" class="nav-link">
                             <i class="nav-icon fa fa-th"></i>

@@ -41,9 +41,11 @@
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 <script src="/js/app.js"></script>
-<script src="/dist/js/adminlte.js"></script>
-<script src="/dist/js/pages/dashboard.js"></script>
-<script src="/dist/js/demo.js"></script>
 @yield('script')
+
+<script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js')}}"></script>
+<!-- Page script -->
 </body>
 </html>

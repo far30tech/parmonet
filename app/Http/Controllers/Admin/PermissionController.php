@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+<<<<<<< HEAD
 
+=======
+>>>>>>> b6a4b1f46bbfe2694ee75a1145680cfad52ea9dd
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;

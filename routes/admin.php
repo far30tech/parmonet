@@ -19,6 +19,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/permission/delete/{id}', 'Admin\PermissionController@delete')->name('permission.delete');
     Route::get('/permission/search', 'Admin\PermissionController@search')->name('permission.search');
 
+    Route::get('/category', 'Admin\CategoryController@index')->name('category');
+    Route::get('/category/create', 'Admin\CategoryController@create')->name('category.create');
+    Route::post('/category/store', 'Admin\CategoryController@store')->name('category.store');
+
 });
 
 
