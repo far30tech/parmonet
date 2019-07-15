@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 use Validator;
+use Redirect;
+use View;
 class CategoryController extends Controller
 {
     /**
@@ -16,12 +18,33 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::search($request->all());
-        if (sizeof($category) == 0) $x = 0;
-        else $x = 1;
-        return view('admin.category.index',compact('category','x'));
+        return view('admin.category.index');
     }
 
+    public function fetch()
+    {
+        $categories = Category::where('parent','=',  NULL)->orderBy('updated_at', 'desc')->paginate(500);
+        return response()->json($categories);
+       
+    }
+    public function fetchsubcat($id)
+    {
+        $subcategories = Category::Where('parent','=',$id)->orderBy('updated_at', 'desc')->paginate(500);
+        return response()->json($subcategories);
+
+    }
+    public function fetchsubsubcat($id)
+    {
+        $subcategories = Category::Where('parent','=',$id)->orderBy('updated_at', 'desc')->paginate(500);
+        return response()->json($subcategories);
+
+    }
+    public function fetchsubs($id)
+    {
+        $subcategories = Category::Where('parent','=',$id)->orderBy('updated_at', 'desc')->paginate(500);
+        return response()->json($subcategories);
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -29,6 +52,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        
         return view('admin.category.create');
     }
 
@@ -40,7 +64,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-   
+        Log::info($request['name']);
+        Log::info($request['description']);
+        Log::info($request['parent']);
             
             $category = Category::create([
                 'name'=>$request['name'],
@@ -56,17 +82,34 @@ class CategoryController extends Controller
        
         
     }
-
+    public function delete(Category $id)
+    {
+        $id->delete();
+        return response()->json(['key' => 'value'], 200);
+    //return response()->json(['key' => 'value'], 503);
+     }
+     public function search(Request $request)
+     {
+ 
+         if (isset($request->id)){
+             $data = Category::where('id','like','%'.$request->id.'%')->paginate(7);
+         }
+         if (isset($request->name)){
+             $data = Category::where('name','like','%'.$request->name.'%')->paginate(7);
+         }
+         if (isset($request->title)){
+             $data = Category::where('parent','like','%'.$request->parent.'%')->paginate(7);
+         }
+ 
+         return response()->json($data);
+     }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.

@@ -1,17 +1,21 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
+
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
     public function fetch()
     {
         $permissions = Permission::orderBy('updated_at', 'desc')->paginate(7);
+
         return response()->json($permissions);
+       
+
     }
 
     public function create()
@@ -35,9 +39,11 @@ class PermissionController extends Controller
 
     public function delete(Permission $id)
     {
-        $id->delete();
-        return response()->json(['key' => 'value'], 200);
-    }
+    //     $id->delete();
+    //     return response()->json(['key' => 'value'], 200);
+    return response()->json(['key' => 'value'], 503);
+    // }
+}
 
     public function search(Request $request)
     {

@@ -15,7 +15,7 @@
                     <img src="" class="img-circle elevation-2">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{ auth('admin')->user()->name }}</a>
+                    <a href="#" class="d-block"></a>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('category') }}" class="nav-link">
+                                <a href="{{ route('category.index') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>نمایش</p>
                                 </a>

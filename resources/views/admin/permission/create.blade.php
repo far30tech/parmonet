@@ -241,6 +241,5 @@
             }
         })
     </script>
-
 @endsection
 
