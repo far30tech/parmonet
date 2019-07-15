@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-<<<<<<< HEAD
-
-=======
->>>>>>> b6a4b1f46bbfe2694ee75a1145680cfad52ea9dd
 use App\Http\Controllers\Controller;
+
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +14,7 @@ class PermissionController extends Controller
         $permissions = Permission::orderBy('updated_at', 'desc')->paginate(7);
 
         return response()->json($permissions);
+       
 
     }
 
@@ -41,9 +39,11 @@ class PermissionController extends Controller
 
     public function delete(Permission $id)
     {
-        $id->delete();
-        return response()->json(['key' => 'value'], 200);
-    }
+    //     $id->delete();
+    //     return response()->json(['key' => 'value'], 200);
+    return response()->json(['key' => 'value'], 503);
+    // }
+}
 
     public function search(Request $request)
     {
