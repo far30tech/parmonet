@@ -1,23 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-<<<<<<< HEAD
 
-=======
->>>>>>> b6a4b1f46bbfe2694ee75a1145680cfad52ea9dd
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
     public function fetch()
     {
         $permissions = Permission::orderBy('updated_at', 'desc')->paginate(7);
-
         return response()->json($permissions);
-
     }
 
     public function create()

@@ -2,79 +2,89 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends AdminController
 {
-
-    public function index(Request $request)
+    public function fetch()
     {
-        $roles = Role::search($request->all());
-        if (sizeof($roles) == 0) $x = 0;
-        else $x = 1;
+        $roles = Role::orderBy('updated_at', 'desc')->paginate(7);
+        return response()->json($roles);
+    }
 
-        return view('admin.role.index', compact('roles', 'x'));
+    public function getPermission()
+    {
+        $permissions = Permission::orderBy('updated_at', 'desc')->get();
+        return response()->json($permissions);
     }
 
     public function create()
     {
-        $permissions = Permission::latest()->get();
-
-        return view('admin.role.create', compact('permissions'));
-    }
-
-    public function edit(Role $role)
-    {
-        $permissions = Permission::get();
-        $selects=$role->permissions;
-
-        return view('admin.role.edit', compact('role', 'permissions','selects'));
-    }
-
-    public function update(Request $request, Role $role)
-    {
-        DB::table('permission_role')->where('role_id', $role['id'])->delete();
-        $role->permissions()->sync($request->input('permission_id'));
-
-        $data = $request->all();
-        $role->update($data);
-
-        return redirect(route('role.index'));
+        return view('admin.role.create');
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
             'title' => 'required',
+            'permissions' => 'required',
         ]);
 
-        $role = Role::create([
+        $x=Role::where('name',$request['name'])->first();
+        if(isset($x)){
+            $x->permissions()->detach();
+            $x->delete();
+        }
+
+        $role=Role::create([
             'name' => $request['name'],
             'title' => $request['title'],
         ]);
-        session()->flash('store', 'successful');
-        $role->permissions()->sync($request['permission_id']);
+        $role->permissions()->attach($request['permissions']);
 
-        return redirect(route('role.create'));
+        return response()->json(['key' => 'value'], 200);
     }
 
-
-    public function destroy(Role $role)
+    public function delete(Role $id)
     {
-        $role->delete();
-
-        return redirect(route('role.index'));
+        $id->delete();
+        return response()->json(['key' => 'value'], 200);
     }
 
-
-
-    public function show($id)
+    public function search(Request $request)
     {
-        //
+
+        if (isset($request->id)) {
+            $data = Role::where('id', 'like', '%' . $request->id . '%')->paginate(7);
+        }
+        if (isset($request->name)) {
+            $data = Role::where('name', 'like', '%' . $request->name . '%')->paginate(7);
+        }
+        if (isset($request->title)) {
+            $data = Role::where('title', 'like', '%' . $request->title . '%')->paginate(7);
+        }
+
+        return response()->json($data);
+    }
+
+    public function fetchPermission(Role $id)
+    {
+
+        $a = $id->permissions;
+        $permissions=array();
+        foreach ($a as $permission){
+            array_push($permissions,$permission->title);
+        }
+        $permissions=implode(" - ",$permissions);
+
+        Log::info($permissions);
+
+        return response()->json($permissions);
+
     }
 }

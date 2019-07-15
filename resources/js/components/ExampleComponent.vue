@@ -1,23 +1,41 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+    <div>
+        <multiselect v-model="value" tag-placeholder="Add this as new tag" placeholder="انتخاب دسترسی"
+                     label="name" track-by="code" :options="options" :multiple="true" :taggable="true"
+                     @tag="addTag"></multiselect>
 
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+        <pre class="language-json"><code>{{ value }}</code></pre>
+
     </div>
 </template>
 
 <script>
+    import Multiselect from 'vue-multiselect'
+
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+        components: {
+            Multiselect
+        },
+        data() {
+            return {
+                value: [
+                ],
+                options: [
+                ]
+            }
+        },
+        methods: {
+            fetchPermissions() {
+                let data = this;
+                axios.get('/admin/role/getPermission').then(res => {
+                    data.options = res.data;
+                });
+            },
+        },
+        mounted: function () {
+            this.fetchPermissions();
+        },
     }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

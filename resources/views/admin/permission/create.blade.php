@@ -241,9 +241,6 @@
             }
         })
     </script>
-<<<<<<< HEAD
-=======
-    
->>>>>>> b6a4b1f46bbfe2694ee75a1145680cfad52ea9dd
+
 @endsection
 

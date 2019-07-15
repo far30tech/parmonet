@@ -220,6 +220,6 @@ ul {
     font-family: 'Vazir', sans-serif;
 }
 
-.main-header{z-index: unset}
+.main-header{z-index: 1000}
 
 a:hover{cursor: pointer}
